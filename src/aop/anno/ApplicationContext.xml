@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 빈들(객체들) -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+						http://www.springframework.org/schema/aop
+						http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context-4.3.xsd">		
+	
+	
+	<!-- Instrument, Song 객체를 한번에 만들어줌 -->
+	<context:component-scan base-package="aop.anno">
+		<context:include-filter type="assignable" expression="aop.anno.Instrument"/>
+		<context:include-filter type="assignable" expression="aop.anno.Song"/>
+	</context:component-scan>
+	
+	<!-- 어노테이션 AOP -->
+	<aop:aspectj-autoproxy />
+
+	<!-- 어노테이션으로 바꿧기에 필요 X -->
+	<!-- 
+	<bean id="hong" class="aop.anno.Instrumentlist" autowire="byType">
+		<property name="song" value="Hello"/>
+	</bean>
+	 
+	<bean id="singer" class="aop.anno.Singer" autowire="byType">
+		<property name="name" value="김동현"/>
+	</bean>
+	 -->
+	 
+	 
+	<!-- 객체를 참조하기에 ref도 똑같이 넣어줌 -->
+	<!-- performer 실행 전에 (method) 실행해라 -->
+	<!-- 
+	<bean id="audience" class="aop.anno.Audience"/>
+	<aop:config>
+		<aop:aspect ref="audience">
+			<aop:pointcut expression="execution(* aop.anno.Performer.perform(..))" id="perform"/>
+			<aop:before pointcut-ref="perform" method="takeSeat"/>
+			<aop:before pointcut-ref="perform" method="turnOffPhone"/>
+			
+			<aop:after-returning pointcut-ref="perform" method="applaud"/>
+				
+			<aop:after-throwing pointcut-ref="perform" method="refund"/>
+
+			<aop:around pointcut-ref="perform" method="performance"/>
+			
+		</aop:aspect>
+	</aop:config>
+	 -->
+	  
+	  
+	 <bean id="volunteer" class="aop.anno.Volunteer"/>
+	 <!--  
+	 <bean id="mindReader" class="aop.anno.MindReader"/>
+
+	 <aop:config>
+	 	<aop:aspect ref="mindReader"> -->
+	 		<!-- thinking 이라는 메소드가 실행될때 String 매개변수로 넘어오는값을 던져주어라 앞뒤로 실행될 메소드에 -->
+	 <!--
+	 		<aop:pointcut expression="execution(* aop.anno.Thinker.thinking(String)) and args(thoughts) " id="thinking"/>
+	 		<aop:before pointcut-ref="thinking" method="intercept" arg-names="thoughts"/>
+	 	</aop:aspect>
+	 </aop:config>
+	 -->
+	 
+</beans>

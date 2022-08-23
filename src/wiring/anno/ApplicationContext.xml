@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 빈들(객체들) -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context-4.3.xsd
+						http://www.springframework.org/schema/util
+						http://www.springframework.org/schema/util/spring-util-4.3.xsd">	
+							
+	<context:annotation-config />
+	
+	
+	 <!-- primary없으면 에러 -->
+	<bean id="piano" class="wiring.anno.Piano"/>
+	<bean id="guitar" class="wiring.anno.Guitar"/>
+	<bean id="drum" class="wiring.anno.Drum"/>
+	<bean id="hong" class="wiring.anno.Instrumentlist" />
+	
+	<!-- Singer부분 추가 -->
+	<bean id="bounce" class="wiring.anno.Bounce"/>
+	<bean id="hello" class="wiring.anno.Hello"/>
+	<bean id="singer" class="wiring.anno.Singer"/>
+	
+	
+	<!-- TwoManBand -->
+	<bean id="kim" class="wiring.anno.TwoManBand"/>
+	
+	<util:list id="names">
+		<value>홍길동</value>
+		<value>김유신</value>
+		<value>이순신</value>
+	</util:list>
+	
+	<!-- 객체가 들어가기에 ref로 해줌 -->
+	<!-- List<instrument> -->
+	<util:list id="instruments">
+		<ref bean="piano"/>
+		<ref bean="guitar"/>
+		<ref bean="drum"/>
+	</util:list>
+	
+	<!-- Map 자료형이 달라도 상관 x -->
+	<util:map id="songs">
+		<entry key="Hello" value-ref="hello"/>
+		<entry key="Bounce" value-ref="bounce"/>
+	</util:map>
+	
+	
+	
+	<!-- Singer 변환 -->
+	<util:list id="ss">
+		<ref bean="hello"/>
+		<ref bean="bounce"/>
+	</util:list>
+	
+	<util:map id="ins">
+		<entry key="GUITAR" value-ref="guitar"/>
+		<entry key="PIANO" value-ref="piano"/>
+		<entry key="DRUM" value-ref="drum"/>
+	</util:map>
+	
+</beans>

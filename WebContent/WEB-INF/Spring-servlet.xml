@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 빈들(객체들) -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+						http://www.springframework.org/schema/aop
+						http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+						
+						
+	<!-- 컨트롤러라는 anno가 들어가야함 --> 		
+	<!-- 자바 방식으로 객체 생성 -->
+	<!-- mvc만 스켄할것 -->
+	<context:component-scan base-package="mvc"/>
+	<!-- <bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		jstl사용하기에 뷰클레스로 잡고 jstl로 벨류를 잡음
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+		
+		폴더에 mvc 빼고 파일 이름에 .jsp 안붙여도됨
+		<property name="prefix" value="/mvc/"/>  폴더가 없으면 이부분을 없앤다, 헨들러에서 직접 지정
+		<property name="suffix" value=".jsp"/>
+	</bean> -->
+</beans>

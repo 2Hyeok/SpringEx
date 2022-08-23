@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- user.xml 얘가 Mapper -->
+<!-- 설정이 들어가야함 -->
+<!-- mapper 안에 sql을 넣어주면 됨 -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="User">
+		<insert id="insertUser" parameterType="mybatis.User">
+			insert into dbtest values (#{id}, #{passwd}, #{name}, #{tel}, sysdate ) 
+		</insert>
+		
+		<delete id="deleteUser" parameterType="String">
+			delete from dbtest where id=#{id}
+		</delete>
+		
+		<select id="getUsers" resultType="mybatis.User">
+			select * from dbtest
+		</select>
+		
+		<update id="updateUser" parameterType="mybatis.User">
+			update dbtest set passwd=#{passwd}, tel=#{tel} where id=#{id}
+		</update>
+		
+		<select id="getUser" resultType="mybatis.User" parameterType="String">
+			select * from dbtest where id=#{id} 
+		</select>
+		
+	</mapper>

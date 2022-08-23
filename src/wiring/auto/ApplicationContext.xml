@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 빈들(객체들) -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">		
+	
+	<!-- id 에 들어가는 이름을 바꾸어주자 -->
+	<!-- byType이면 3개중이 무엇을 넣을지 모르기에 지정을 해주어야한다 -->
+	<!-- autowire-candidate="false" 빼고싶은것에 전부 넣어주어야함 or primary="true" 하나만 -->
+	<!-- byType
+	<bean id="piano" class="wiring.auto.Piano"/>
+	<bean id="guitar" class="wiring.auto.Guitar" primary="true"/>
+	<bean id="drum" class="wiring.auto.Drum"/>
+	<bean id="hong" class="wiring.auto.Instrumentlist" autowire="byType">
+		<property name="song" value="Hello"/>
+	</bean>
+	 -->
+	
+	<!-- constructor --> 
+	<bean id="piano" class="wiring.auto.Piano" autowire-candidate="false"/>
+	<bean id="guitar" class="wiring.auto.Guitar" autowire-candidate="false"/>
+	<bean id="drum" class="wiring.auto.Drum"/>
+	<bean id="hong" class="wiring.auto.Instrumentlist" autowire="constructor">
+		<constructor-arg value="Hello" />
+	</bean>
+	 
+	<!-- id 에 들어가는 이름을 바꾸어주자 -->
+	<!-- 
+	<bean id="bounce" class="wiring.auto.Bounce"/>
+	<bean id="hello" class="wiring.auto.Hello" primary="true"/>
+	<bean id="singer" class="wiring.auto.Singer" autowire="byType">
+		<property name="name" value="김동현"/>
+	</bean>
+	 -->
+	<!-- constructor --> 
+	<bean id="bounce" class="wiring.auto.Bounce"/>
+	<bean id="hello" class="wiring.auto.Hello" primary="true"/>
+	<bean id="singer" class="wiring.auto.Singer" autowire="constructor">
+		<constructor-arg value="김동현"/>
+	</bean>
+	
+</beans>

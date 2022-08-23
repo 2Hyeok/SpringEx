@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 빈들(객체들) -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+						http://www.springframework.org/schema/util
+						http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+						
+	<util:list id="cities">
+		<bean class="wiring.spel.City" p:name="서울시" p:state="경기도" p:population="950"/>
+		<bean class="wiring.spel.City" p:name="수원시" p:state="경기도" p:population="400"/>
+		<bean class="wiring.spel.City" p:name="인천시" p:state="경기도" p:population="500"/>
+		
+		<!-- 이렇게 사용 안하기 위해서 -->
+		<bean class="wiring.spel.City">
+			<property name="name" value="#{'안산시'}"/>
+			<property name="state" value="#{'경기도'}"/>
+			<property name="population" value="#{400}"/>
+		</bean>
+	</util:list>
+						
+	
+	<!-- 확인용 -->
+	<!--  -->
+	<bean id="prop" class="wiring.spel.Prop">
+		<!-- <property name="str" value="홍길동"/> -->
+		<!-- <property name="str" value="#{5}"/> -->
+		<!-- <property name="str" value="#{10.5}"/> -->
+		
+		<!-- 문자열 이라면 문자열이라고 표시 해주어야함 -->
+		<!-- <property name="str" value="#{ABC}"/> error -->
+		<!-- <property name="str" value="#{'ABC'}"/> -->
+		<!-- <property name="str" value="#{true}"/> -->
+		
+		<!-- 문자열과 섞어서도 출력 가능 -->
+		<!-- <property name="str" value="입력한 값은 #{true}"/> -->
+		
+		<!-- 연산도 가능 (따옴표가 붙은 경우는 붙여서 인식)-->
+		<!-- <property name="str" value="#{'5+2'}"/> -->
+		<!-- <property name="str" value="#{'5'+'2'}"/> -->
+		<!-- <property name="str" value="#{'5'+2}"/> -->
+		<!-- <property name="str" value="#{5+2}"/> -->
+		
+		
+		
+		<!-- 연산 가능 -->
+		<!-- <property name="str" value="#{'5'-2}"/> -->
+		<!-- <property name="str" value="#{5/2}"/> -->
+
+		<!-- 자바는 error -->
+		<!-- <property name="str" value="#{'5'- '2'}"/> -->
+		
+		<!-- 비트논리 연산에서 XOR연산 -->
+		<!-- <property name="str" value="#{5^2}"/> -->
+		
+		<!-- 값은 나오긴 하지만 햇갈리기에 gt라고 표현 -->
+		<!-- <property name="str" value="#{5 gt 2}"/> -->
+		<!-- <property name="str" value="#{5 lt 2}"/> -->
+		<!-- <property name="str" value="#{5 ge 2}"/> -->
+		<!-- <property name="str" value="#{5 le 2}"/> -->
+		<!-- <property name="str" value="#{5 eq 2}"/> -->
+		<!-- <property name="str" value="#{5 ne 2}"/> -->
+		
+		
+		<!-- <property name="str" value="#{true && false}"/> error -->
+		<!-- <property name="str" value="#{true and false}"/> -->
+		<!-- <property name="str" value="#{true or false}"/> -->
+		
+		<!-- 삼항연산 -->
+		<!-- <property name="str" value="#{5%2==0 ? '짝수' : '홀수'}"/> -->
+		
+		
+		<!-- 다른 객체가 가지고 있는 get 메소드를 꺼내올 수 있음 -->
+		<!-- <property name="str" value="#{singer.getName()}"/> -->
+		
+		<!-- 생략해서 쓸 수 있음 (getter 호출) -->
+		<!-- prop라는 객체에서 setStr호출  = prop.setStr(singer.getName()) 라는 코드와 같다 -->
+		<!-- <property name="str" value="#{singer.name}"/> -->
+		
+		<!-- 0~44까지의 랜덤 숫자 -->
+		<!-- <property name="str" value="#{r.nextInt(45)}"/> -->
+		<!-- <property name="str" value="#{r.nextInt(45) + 1}"/> -->
+		
+		<!-- <property name="str" value="#{date.toString()}"/> -->
+		
+		<!-- static 사용시 T()라고 정해짐-->
+		<!-- 시스탬명.PI -->
+		<!-- <property name="str" value="#{T(java.lang.Math).PI }"/> -->
+		<!-- Math.PI  static 클래스이름.맴버 -->
+		<!-- System.(static의 점)out.(객체.멤버의 점)println() -->
+		
+		<!-- 메소드 -->
+		<!-- 소수점 랜덤으로 찍힘 -->
+		<!-- <property name="str" value="#{T(java.lang.Math).random()}"/> -->
+		
+		
+		<!-- null - safe -->
+		<!-- null 이없는데 toString으로 호출하여 에러 -->
+		<!-- <property name="str" value="#{singer.name.toString()}"/> -->
+		<!-- 강제로 name에 null을 넣음 -->
+		<!-- <property name="str" value="#{singer.name?.toString()}"/> -->
+		<!-- 값을 잘 받는지 확인을 잘하자 -->
+		<!-- <property name="str" value="#{null?.toString()}"/> -->
+		
+		<!-- null - check 엘비스 연산 -->
+		<!-- <property name="str" value="#{singer.name != null ? '홍길동' : '이순신'}"/> -->
+		<!-- 이게 엘비스 연산 (위와 연산이 동일) -->
+		<!-- 값이 있으면 그 값을 넣고 값이 없으면 다른(설정값)을 넣어라 -->
+		<!-- <property name="str" value="#{singer.name ?: '이순신'}"/> -->
+		
+		
+		<!-- 리스트 안에 name이 들어감 -->
+		<!-- <property name="str" value="#{cities[0].name}"/> -->
+		<property name="str" value="#{cities[1].population}"/>
+		
+		
+		<!-- util 네임 스페이스 -->
+		
+		
+		
+	</bean>
+	<!-- 자바의 것을 가져다 쓸 수도 있음 -->
+	<bean id="r" class="java.util.Random"/>
+	<bean id="date" class="java.util.Date"/>
+	
+	
+	
+	
+	<!-- 사용은 위에서 하지만 밑에 객체를 만들어도 순서는 상관없음 -->
+	<!-- 메인에서 실행하려고 만든 클래스는 아님 -->				
+	<bean id="singer" class="wiring.spel.Singer">
+		<!-- <property name="name"><null/></property> -->
+		<property name="name" value="홍길동"/>
+	</bean>
+
+</beans>

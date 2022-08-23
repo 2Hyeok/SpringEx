@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 빈들(객체들) -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+						http://www.springframework.org/schema/aop
+						http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context-4.3.xsd"><!-- 		
+	
+	JDBC 드라이버 기반 DataSource
+	스프링에서 제공해주는 소스 사용 하기에 이런식으로 설정해줌
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+		<property name="username" value="bit"/>
+		<property name="password" value="bit"/>
+	</bean>
+	데이터 소스를 디비처리하는곳에 주면됨
+	생성자로 받게 되있음
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg ref="dataSource"/>
+	</bean>
+	
+	갈아끼우기 편하게 인터페이스 상속으로 클래스를 만들어줌
+	
+	객체를 받아다가 씀
+	<bean id="userDao" class="dao.JdbcUserDao">
+		<property name="template" ref="jdbcTemplate"/>
+	</bean> -->
+	
+	<!-- 커넥션풀 DataSource -->
+	<!--
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+		<property name="username" value="bit"/>
+		<property name="password" value="bit"/>
+		<property name="initialSize" value="10"/>
+		<property name="maxActive" value="10"/>
+		<property name="maxWait" value="3"/>
+	</bean>
+	-->
+	
+	<!-- jdbc 템플릿 support 사용시 필요 X
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg ref="dataSource"/>
+	</bean>
+	<bean id="userDao" class="dao.JdbcUserDao">
+		<property name="template" ref="jdbcTemplate"/>
+	</bean>
+	 -->
+	 
+	 <!-- set호출 -->
+	 <!-- 자신에게 없으면 부모꺼를 호출함 -->
+	 <!-- 
+	 <bean id="userDao" class="dao.JdbcUserDao">
+	 	<property name="dataSource" ref="dataSource"/>
+	 </bean>
+	  -->
+	  
+	  
+	  <!-- 자바 방식으로 객체 생성 -->
+	  <context:component-scan base-package="dao"/>
+</beans>

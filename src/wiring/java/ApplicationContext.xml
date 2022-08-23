@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 빈들(객체들) -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context-4.3.xsd
+						http://www.springframework.org/schema/util
+						http://www.springframework.org/schema/util/spring-util-4.3.xsd">	
+	
+	<!-- Xml에서 객체를 만들때 -->
+	<!--
+	<bean id="company" class="wiring.java.Company">
+		<property name="name" value="홍길동"/>
+	</bean>
+	-->
+	<!-- p네임 스페이스 -->
+	<!-- 
+	<bean id="student" class="wiring.java.Student" p:name="이순신"/>
+	<bean id="teacher" class="wiring.java.Teacher" p:name="김유신"/>
+	 -->
+	<!-- 프로퍼티 -->
+	<!--
+	<bean id="actor" class="wiring.java.Actor">
+		<property name="name" value="강감찬"/>
+		<property name="age" value="20"/>
+		<property name="role" ref="teacher"/>
+	</bean>
+	 -->
+	 
+	 
+	 
+	 <!-- Annotation -->
+	 <!-- 
+	 <context:component-scan base-package="wiring.java">
+	 	<context:include-filter type="assignable" expression="wiring.java.Actor"/>
+	 	<context:include-filter type="assignable" expression="wiring.java.Role"/>
+	 </context:component-scan>
+	  -->
+	  
+	  
+	 <!-- Java -->
+	 <!-- 이거 하나만 넣어줌 -->
+	 <context:component-scan base-package="wiring.java"/>
+	 
+	 
+	 
+	 
+</beans>

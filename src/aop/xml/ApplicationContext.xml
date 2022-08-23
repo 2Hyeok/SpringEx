@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 빈들(객체들) -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+						http://www.springframework.org/schema/aop
+						http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">		
+	
+	
+	<!-- constructor hong --> 
+	<bean id="piano" class="aop.xml.Piano" autowire-candidate="false"/>
+	<bean id="guitar" class="aop.xml.Guitar" autowire-candidate="false"/>
+	<bean id="drum" class="aop.xml.Drum"/>
+	<bean id="hong" class="aop.xml.Instrumentlist" autowire="byType">
+		<property name="song" value="Hello"/>
+	</bean>
+	 
+	<!-- constructor Singer --> 
+	<bean id="bounce" class="aop.xml.Bounce"/>
+	<bean id="hello" class="aop.xml.Hello" primary="true"/>
+	<bean id="singer" class="aop.xml.Singer" autowire="byType">
+		<property name="name" value="김동현"/>
+	</bean>
+	
+	<!-- 객체를 참조하기에 ref도 똑같이 넣어줌 -->
+	<!-- performer 실행 전에 (method) 실행해라 -->
+	<!-- 
+	<bean id="audience" class="aop.xml.Audience"/>
+	<aop:config>
+		<aop:aspect ref="audience">
+	 -->
+			<!-- 이렇게 쓰면 포인트컷 ref라 써주자 -->
+			<!-- 
+			<aop:pointcut expression="execution(* aop.xml.Performer.perform(..))" id="perform"/>
+			
+			<aop:before pointcut-ref="perform" method="takeSeat"/>
+			<aop:before pointcut-ref="perform" method="turnOffPhone"/>
+			 -->
+			<!-- 실행 성공시 -->
+			<!-- <aop:after-returning pointcut-ref="perform" method="applaud"/> -->
+				
+			<!-- 에러발생시 -->
+			<!-- 
+			<aop:after-throwing pointcut-ref="perform" method="refund"/>
+			 -->	
+			<!-- 주위로 실행 시켜라 -->
+			<!-- 
+			<aop:around pointcut-ref="perform" method="performance"/>
+		</aop:aspect>
+	</aop:config>
+	 -->
+	 
+	 <!--  -->
+	 <bean id="mindReader" class="aop.xml.MindReader"/>
+	 <bean id="volunteer" class="aop.xml.Volunteer"/>
+	 <aop:config>
+	 	<aop:aspect ref="mindReader">
+	 		<!-- thinking 이라는 메소드가 실행될때 String 매개변수로 넘어오는값을 던져주어라 앞뒤로 실행될 메소드에 -->
+	 		<aop:pointcut expression="execution(* aop.xml.Thinker.thinking(String)) and args(thoughts) " id="thinking"/>
+	 		<aop:before pointcut-ref="thinking" method="intercept" arg-names="thoughts"/>
+	 	</aop:aspect>
+	 </aop:config>
+	 
+	 
+</beans>

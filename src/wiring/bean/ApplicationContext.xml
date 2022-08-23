@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 빈들(객체들) -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">		
+	
+	
+	<!-- DI -->
+	<bean id="lee" class="wiring.bean.Juggler"/> <!-- 객체생성, 경로를 다 주어야함, bean에있는 Juggler에 Lee라고 만들겠다. -->
+		
+	<!-- 생성자 wiring -->
+	<bean id="park" class="wiring.bean.Juggler">
+		<constructor-arg value="5"/> <!-- 생성자를 통해 value가 5로 들어감 -->
+	</bean>
+	
+	<!-- 객체 생성 , 생성자 wiring -->
+	<bean id="flower" class="wiring.bean.Flower"/> <!-- 둘중에 하나만 넣어줌 -->
+	<bean id="picnic" class="wiring.bean.Picnic"/>
+	
+	<!--
+	<bean id="hong" class="wiring.bean.PoeticJuggler">
+		<constructor-arg value="7"/> 
+		<constructor-arg ref="flower"/>
+	</bean>
+	-->
+	
+	<!-- 팩토리 메서드 -->
+	<bean id="stage" class="wiring.bean.Stage" factory-method="getInstance"/> <!-- 메서드를 가져다 쓰겠다 -->
+	<!-- 여기 까지는 에러가남 보통은 static(한번만 공유)으로 만듬 -->
+	
+	
+	<!-- singleton / prototype --> <!-- prototype 사용시  같은객체를 받음 -->
+	<bean id="ticket" class="wiring.bean.Ticket" scope="prototype"/> <!--  티켓 객체 생성 -->
+	
+	
+	<!-- 빈 초기화 정리 -->
+	<bean id="auditorium" class="wiring.bean.Auditorium" init-method="turnOn" destroy-method="turnOff"/>
+	
+	
+	<!-- 프로퍼티 와이어링, 프로퍼티 주입 -->
+	<bean id="guitar" class="wiring.bean.Guitar"/>
+	<bean id="piano" class="wiring.bean.Piano"/>
+	<bean id="drum" class="wiring.bean.Drum"/>
+	<!-- 생성자가 없기에 프로퍼티로 주입 -->
+	<!--<bean id="hong" class="wiring.bean.Instrumentlist"> -->
+		<!--<property name="song" value="Hello"/> --> <!-- 단순 문자열 -->
+		<!-- <property name="instrument" ref="piano"/>  -->
+		<!--<property name="instrument"> -->
+			<!--<bean class="wiring.bean.Piano"/> -->
+		<!--</property> -->
+	<!--</bean> -->
+
+	<!--  P 네임 스페이스 -->
+	<!--<bean id="hong" class="wiring.bean.Instrumentlist"
+		p:song="Hello" p:instrument-ref="guitar"/> --><!-- set메소드의 이름 -->
+	
+	
+	<!-- 이름은 hong 이라 계속 할것 이기에 주석처리 --> 
+	<!-- 객체 생성  -->
+	<!-- 
+	<bean id="hello" class="wiring.bean.Hello"/>
+	<bean id="bounce" class="wiring.bean.Bounce"/>
+	-->  
+	<!--
+	<bean id="singer" class="wiring.bean.Singer">
+	--> 
+	<!--<constructor-arg value="김동현"/> --><!-- 값을 넘겨줌 -->
+	<!--<constructor-arg ref="hello"/>--> <!-- 객체를 넘겨줌, poem을 상속받은 것을넣어줌 hello, bounce을 넘기려면 객체를 만들어서 넘겨야함
+	</bean> -->
+   
+	<!-- singer 프로퍼티 변경후 -->
+	<!--<bean id="singer" class="wiring.bean.Singer"> -->
+		<!--<property name="name" value="김동현"/> --> <!-- 단순 문자열 -->
+		<!--<property name="song" ref="hello"/> -->
+	<!--</bean> -->
+   
+   <!-- P 네임 스페이스 -->
+	<!--
+	<bean id="singer" class="wiring.bean.Singer"
+		p:name="김동현" p:song-ref="hello"/>
+	-->
+   
+   <!-- 컬렉션 와이어링 -->
+   <!-- 프로퍼티에 매개변수로 주는것이 list이다. -->
+   <!-- 프로퍼티 안으로 들어가야함 하나가 아닌 여러개 이기에 리스트태그사용 -->
+   <!-- 
+   <bean id="hong" class="wiring.bean.OneManBand">
+      <property name="instruments"> 
+         <list>
+            <ref bean="piano"/>
+            <ref bean="guitar"/>
+            <ref bean="drum"/>
+            <ref bean="guitar"/>
+         </list>
+      </property>
+   </bean>
+   -->
+   
+   <!-- 키값이 중복되면 안됨 -->
+   <bean id="hong" class="wiring.bean.TwoManBand">
+   	 <property name="instruments">
+   	 	<map>
+   	 		<entry key="PIANO" value-ref="piano"/>
+   	 		<entry key="GUITAR" value-ref="guitar"/>
+   	 		<entry key="DRUM" value-ref="drum"/>
+   	 	</map>
+   	 </property>
+   </bean>
+
+
+
+   <!-- 연습용 -->
+   <!-- 
+   <bean id="hello" class="wiring.bean.Hello"/>
+   <bean id="bounce" class="wiring.bean.Bounce"/>   
+   <bean id="singer" class="wiring.bean.Singer"
+      p:name="김동현" p:song-ref="hello"/>
+    -->
+    
+	<bean id="hello" class="wiring.bean.Hello"/>
+	<bean id="bounce" class="wiring.bean.Bounce"/>
+	<bean id="singer" class="wiring.bean.Singer">
+		<property name="name" value="김동현"/>
+		<property name="songs">
+			<list>
+				<ref bean="hello"/>
+				<ref bean="bounce"/>
+			</list>
+		</property>
+		<property name="instruments">
+			<map>
+				<entry key="DRUM" value-ref="drum"/>
+				<entry key="PIANO" value-ref="piano"/>
+				<entry key="GUITAR" value-ref="guitar"/>
+			</map>
+		</property>
+	</bean>
+
+
+</beans>
